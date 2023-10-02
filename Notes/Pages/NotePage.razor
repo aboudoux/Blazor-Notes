@@ -1,0 +1,31 @@
+﻿@page "/notes"
+@layout PostitLayout
+
+
+
+<div class="d-flex flex-row align-items-center gap-2 mt-2">
+    <label>Ajouter une note</label>
+    <button @onclick="AddNote" class="btn btn-outline-success" type="button">+</button>
+</div>
+
+<div class="d-flex flex-row align-content-start flex-wrap mt-2">
+    
+    @foreach (var note in _notes)
+    {
+        <Postit Id="@note.Id" Content="@note.Content" OnRemove="Remove"></Postit>
+    }
+
+    
+</div> 
+
+@code {
+
+    private int _lastId = 1;
+    private record Note(int Id, string Content);
+
+    private List<Note> _notes = new();
+
+    public void AddNote() => _notes.Add(new Note(_lastId++, "Numéro - " + Random.Shared.Next(1,1000)));
+
+    public void Remove(int id) => _notes.RemoveAll(a => a.Id == id);
+}

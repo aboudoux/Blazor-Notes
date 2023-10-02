@@ -1,0 +1,47 @@
+﻿
+<div class="m-2">
+    <div class="post-it scale-on-hover">
+        
+        <button @onclick="Remove" class="btn position-absolute top-0 end-0 m-2" type="button">
+            🗑️
+        </button>
+
+        <h5>Note</h5>
+        <p>@Content</p>
+    </div>
+</div>
+
+<style>
+        /* Style personnalisé pour la carte post-it */
+        .post-it {
+            background-color: #fffdd0;
+            border: 1px solid #ffd33b;
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+            transform: rotate(-6deg);
+            width: 200px;
+            padding: 20px;
+        }
+
+    .scale-on-hover:hover {
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+    }
+
+    </style>
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+
+    [Parameter]
+    public string Content { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnRemove { get; set; }
+
+    private void Remove()
+    {
+        OnRemove.InvokeAsync(Id);
+    }
+}
